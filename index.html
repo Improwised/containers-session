@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Sail</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+	<script src="plugin/copycode/copycode.js"></script>
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	<style>
+		#diamond {
+			width: 60px;
+		}
+
+		.sail {
+			width: 650px;
+		}
+
+		.s1-subtitle {
+			font-size: 30px;
+		}
+
+		.s1-subtitle-to {
+			font-size: 20px;
+		}
+
+		.s2-body {
+			text-align: left;
+			font-size: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-auto-animate>
+				<img class="sail" src="./img/sail.svg" alt="">
+				<br>
+				<br>
+				<h4 class="s1-subtitle">
+					Zero
+				</h4>
+				<h6 class="s1-subtitle-to">
+					to
+				</h6>
+				<img id="diamond" src="./img/diamond.png" alt="">
+			</section>
+			<section data-auto-animate>
+				<img class="sail" src="./img/sail.svg" alt="">
+				<br>
+				<br>
+				<h4 class="s1-subtitle" style="opacity: 40%;">
+					Munir Khakhi
+				</h4>
+				<h6 class="s1-subtitle-to">
+					to
+				</h6>
+				<img id="diamond" src="./img/diamond.png" alt="">
+			</section>
+			<section>
+				<h3>How many of you are...</h3>
+				<p class="fragment">
+					Working on multiple Laravel Projects?
+				</p>
+				<p class="fragment">
+					Using multiple PHP versions?
+				</p>
+				<p class="fragment">
+					Using multiple Databases?
+				</p>
+				<!-- <p class="fragment">
+					<img src="./img/x-1.png" alt="">
+				</p> -->
+			</section>
+			<section>
+				<div>
+					<h4>What do you use/need to run laravel project(basic/complex)?</h4>
+					<ul class="fragment s2-body">
+						<li>PHP</li>
+						<li>Laravel</li>
+						<li>Database (MySQL, MongoDB, MariaDB, Postgres, SQL Server)</li>
+						<li>Cache (Memcached, Redis, DynamoDB, many others)</li>
+						<li>Storage (S3, SFTP, GCS, Minio, many others)</li>
+						<li>Message Queue (SQS, Beanstalkd, Redis, many others)</li>
+						<li>NodeJS</li>
+						<li>Mail Server</li>
+					</ul>
+				</div>
+
+			</section>
+			<section>
+				<h3>It's all about DX</h3>
+				<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/mgyo0kfV7Vg?si=IJzmOrZO2r7mQRKI&amp;clip=UgkxHrhKwK2XcIEkxvUPxbcMNVo3OuLGoA6F&amp;clipt=ENigMRjYlzQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+				<iframe class="fragment" width="840" height="472"
+					src="https://www.youtube.com/embed/mgyo0kfV7Vg?si=IJzmOrZO2r7mQRKI&amp;clip=UgkxHrhKwK2XcIEkxvUPxbcMNVo3OuLGoA6F&amp;clipt=ENigMRjYlzQ"
+					title="YouTube video player" frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen></iframe>
+				<!-- <video class="fragment" data-autoplay src="https://www.youtube.com/embed/mgyo0kfV7Vg?si=IJzmOrZO2r7mQRKI&amp;clip=UgkxHrhKwK2XcIEkxvUPxbcMNVo3OuLGoA6F&amp;clipt=ENigMRjYlzQ"></video> -->
+			</section>
+			<section>
+				<h5>Sail = DX(Docker, Shell Scripting)</h5>
+			</section>
+			<section>
+				<section>
+					<img src="./img/demo.gif" alt="Demo time">
+				</section>
+				<section data-auto-animate>
+					<h3 data-id="code-title">Just one command</h3>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1|2"><script type="text/template">
+						curl -s "https://laravel.build/laravel-rajkot" | bash
+						./vendor/bin/sail up
+					</script></code></pre>
+				</section>
+				<section>
+					<pre data-id="code-animation"><code class="hljs javascript" data-trim data-line-numbers="1|9-15|19-25"><script type="text/template">
+docker info > /dev/null 2>&1
+
+# Ensure that Docker is running...
+if [ $? -ne 0 ]; then
+    echo "Docker is not running."
+
+    exit 1
+fi
+
+docker run --rm \
+    --pull=always \
+    -v "$(pwd)":/opt \
+    -w /opt \
+    laravelsail/php82-composer:latest \
+    bash -c "laravel new laravel-rajkot && cd laravel-rajkot && php ./artisan sail:install --with=mysql,redis,meilisearch,mailpit,selenium "
+
+cd laravel-rajkot
+
+# Allow build with no additional services..
+if [ "mysql redis meilisearch mailpit selenium" == "none" ]; then
+    ./vendor/bin/sail build
+else
+    ./vendor/bin/sail pull mysql redis meilisearch mailpit selenium
+    ./vendor/bin/sail build
+fi
+
+CYAN='\033[0;36m'
+LIGHT_CYAN='\033[1;36m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+echo ""
+
+if sudo -n true 2>/dev/null; then
+    sudo chown -R $USER: .
+    echo -e "${BOLD}Get started with:${NC} cd laravel-rajkot && ./vendor/bin/sail up"
+else
+    echo -e "${BOLD}Please provide your password so we can make some final adjustments to your application's permissions.${NC}"
+    echo ""
+    sudo chown -R $USER: .
+    echo ""
+    echo -e "${BOLD}Thank you! We hope you build something incredible. Dive in with:${NC} cd laravel-rajkot && ./vendor/bin/sail up"
+fi
+					</script></code>
+					</pre>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>Contains</h3>
+				</section>
+				<section>
+					<h3>
+						Runtimes
+					</h3>
+					<div>8.0</div>
+					<div>8.1</div>
+					<div>8.2</div>
+					<div>8.3 (Not documented)</div>
+				</section>
+				<section>
+					<h3>
+						Databases
+					</h3>
+					<div>Mysql</div>
+					<div>MariaDB</div>
+					<div>Postgres - pgsql</div>
+				</section>
+				<section>
+					<h3>
+						Caching
+					</h3>
+					<div>Memcached</div>
+					<div>Redis</div>
+				</section>
+				<section>
+					<h3>Others</h3>
+					<div>MailPit</div>
+					<div>Meilisearch</div>
+					<div>Minio</div>
+					<div>Selenium</div>
+					<div>Soketi</div>
+				</section>
+			</section>
+			<section>
+				<section>
+					<h3>CLI</h3>
+				</section>
+				<section>
+					<h3>Docker</h3>
+					<div>up</div>
+					<div>stop</div>
+					<div>ps</div>
+					<div>restart</div>
+				</section>
+				<section>
+					<h3>Databases</h3>
+					<div>mysql</div>
+					<div>mariadb</div>
+					<div>psql</div>
+					<div>redis</div>
+				</section>
+				<section>
+					<h3>Many more...</h3>
+					<div>artisan</div>
+					<div>tinker</div>
+					<div>php</div>
+					<div>composer</div>
+					<div>node/bun (Bun is not documented yet)</div>
+					<div>npm/pnpm/yarn (pnpm is not documented yet)</div>
+					<div>debug</div>
+					<div>PHPUnit</div>
+					<div>shell/root-shell</div>
+					<div>share</div>
+				</section>
+			</section>
+			<section>
+				<h4>Q & A</h4>
+			</section>
+			<section>
+				<h4>Congratulation! You are now Sail Hero <img src="./img/diamond.png" alt=""></h4>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script>
+		// More info about initialization & config:
+		// - https://revealjs.com/initialization/
+		// - https://revealjs.com/config/
+		Reveal.initialize({
+			hash: true,
+			// center: false,
+			// Learn about plugins: https://revealjs.com/plugins/
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+		});
+	</script>
+</body>
+
+</html>
