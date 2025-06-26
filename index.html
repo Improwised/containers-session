@@ -27,102 +27,262 @@
             text-align: left;
             font-size: 28px;
         }
+
+        #improwised_logo {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            height: 75px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="hidden">
+        <div id="header">
+            <img id="improwised_logo" src="https://www.improwised.com/img/logo.png" alt="Improwised Technologies">
+        </div>
+    </div>
     <div class="reveal">
         <div class="slides">
+            <!-- Introduction -->
             <section data-auto-animate>
-                <img id="docker-logo" src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png" alt="Docker Logo">
-                <h2 class="workshop-title">Docker: From "It Works on My Machine" to Modern App Deployment</h2>
-                <h4 class="subtitle">Facilitators: Munir Khakhi and Chintan Viradiya</h4>
+                <img id="docker-logo" src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png"
+                    alt="Docker Logo">
+                <h2 class="workshop-title">Docker Workshop</h2>
+                <h5 class="subtitle">Facilitators: Munir Khakhi and Chintan Viradiya</h4>
             </section>
-
+            <section>
+                <section>
+                    <h3> Who we are?</h3>
+                    <p class="fragment">Improwised Technologies</p>
+                </section>
+                <section>
+                    <p>Munir Khakhi</p>
+                </section>
+                <section>
+                    <h2>Chintan Viradiya</h2>
+                    <p>
+                        I'm Chintan Viradiya, working as a DevOps Engineer at Improwised Technologies.
+                        I focus on IaaC, managing CI/CD pipelines, and optimizing cloud deployments.
+                        Committed to enhancing system performance, and developer productivity.
+                    </p>
+                </section>
+            </section>
+            <!-- Icebreaker -->
+            <section>
+                <h4>How many of you have used Docker?</h4>
+            </section>
+            <!-- Agenda -->
             <section>
                 <h3>Workshop Agenda</h3>
                 <ul class="content">
                     <li>Introduction to Docker</li>
-                    <li>Understanding Virtual Machines vs. Containers</li>
-                    <li>Hands-on: Running Your First Container</li>
-                    <li>Building and Managing Docker Images</li>
-                    <li>Networking and Data Management in Docker</li>
-                    <li>Best Practices and Security Considerations</li>
-                    <li>Q&A Session</li>
+                    <li>Why Docker?</li>
+                    <li>VM vs Container</li>
+                    <li>Docker Architecture</li>
+                    <li>Installation</li>
+                    <li>Images and Containers</li>
+                    <li>Basic Docker Commands</li>
+                    <li>Dockerfile</li>
+                    <li>Docker Compose</li>
+                    <li>Local Development with Docker</li>
+                    <li>Docker Networking</li>
+                    <li>Docker Volumes (Volumes vs Bind Mounts)</li>
+                    <li>Demo: <a href="https://github.com/Improwised/laravel-horizon-demo">Laravel Horizon Demo</a>
+                    </li>
+                    <li>Summary</li>
+                    <li>Q&A</li>
+                    <li>Feedback</li>
                 </ul>
             </section>
 
+            <!-- Docker Introduction -->
             <section>
-                <h3>Prerequisites</h3>
+                <h3>Introduction to Docker</h3>
                 <ul class="content">
-                    <li>System with administrative rights.</li>
-                    <li>Windows/Mac: Docker Desktop installed beforehand.</li>
-                    <li>Linux: Docker installed beforehand.</li>
-                    <li>Basic familiarity with the command line/terminal.</li>
+                    <li> A cloud infrastructure company (formerly dotCloud) that created Docker as an internal tool</li>
+                    <li> Container Runtime daemon that runs and manages Containers on top of Linux Kernel</li>
+                    <li> CLI client to the Docker Daemon</li>
+                    <li> Container Image Packaging Format, now evolved into OCI Image</li>
                 </ul>
             </section>
 
+            <!-- Why Docker -->
             <section>
-                <h3>What is Docker?</h3>
-                <p class="content">Docker is a platform designed to help developers build, deploy, and run applications inside containers. A container is a lightweight, standalone, and executable software package that includes everything an application needs to run (code, libraries, dependencies, etc.).</p>
+                <h3>Why Docker?</h3>
+                <ul class="content">
+                    <li>Quick and consistent local development setup.</li>
+                    <li>Consistency across development and production environments.</li>
+                    <li>Lightweight and faster than traditional virtual machines.</li>
+                    <li>Improved scalability and resource efficiency.</li>
+                </ul>
+                <aside class="notes">
+                    Explain how Docker allows developers to create isolated environments that can be easily shared
+                    and deployed, reducing the "it works on my machine" problem.
+                </aside>
             </section>
 
+            <!-- VM vs Container -->
             <section>
-                <h3>Virtual Machines vs. Containers</h3>
-                <img src="https://www.docker.com/wp-content/uploads/2022/03/Containerization-VMs.png" alt="VMs vs Containers">
-                <p class="content">Virtual Machines (VMs) emulate entire operating systems, including the kernel, on top of a host OS. Containers, on the other hand, share the host OS kernel and isolate the application processes. This makes containers more lightweight and efficient compared to VMs.</p>
+                <h3>VM vs Container</h3>
+                <img src="./img/containers.png" alt="VMs vs Containers">
+                <p class="content">Virtual Machines emulate entire operating systems, while containers share the
+                    host OS kernel and isolate application processes, making them more lightweight and efficient.
+                </p>
+                <aside class="notes">
+                    Discuss the differences between VMs and containers, emphasizing how containers are more
+                    resource-efficient and faster to start up.
+                    Explain what is Kernel and how containers share the host OS kernel.
+                </aside>
             </section>
 
+            <!-- Docker Architecture -->
             <section>
-                <h3>Hands-on: Running Your First Container</h3>
+                <section>
+                    <h3>Docker Architecture</h3>
+                    <p class="content">Docker uses a client-server architecture. The Docker client talks to the Docker
+                        daemon, which does the heavy lifting of building, running, and distributing your Docker
+                        containers</p>
+                    </p>
+                </section>
+                <section>
+                    <h3>Docker Architecture</h3>
+                    <img src="./img/docker-architecture.webp" alt="Docker Architecture">
+                </section>
+            </section>
+
+            <!-- Installation -->
+            <section>
+                <h3>Installation</h3>
+                <ul class="content">
+                    <li>Windows/Mac: Install Docker Desktop.</li>
+                    <li>Linux: Install Docker using package managers like apt or pacman.</li>
+                    <li>Verify installation with <code>docker --version</code>.</li>
+                </ul>
+                <aside class="notes">
+                    Explain the installation process for different operating systems, highlighting the ease of use
+                    with Docker Desktop for Windows and Mac.
+                    Mention that Linux users can install Docker using their package manager.
+                </aside>
+            </section>
+
+            <!-- Images and Containers -->
+            <section>
+                <h3>Images and Containers</h3>
+                <p class="content">Docker images are blueprints for containers, while containers are runtime
+                    instances of images.</p>
+                 <!-- Build time and runtime -->
+                <p class="content">Images are built using Dockerfiles, which define the environment and
+                    dependencies for the application. Containers are created from these images and run the
+                    application.</p>
+                <p class="content">Images are immutable, meaning they do not change once created, while containers can
+                    be
+                    started, stopped, and modified.</p>
+                <p class="content">Images are stored in a registry, such as Docker Hub, and can be pulled to create
+                    containers on any host with Docker installed.</p>
+                <p class="content">You can build multiple containers with different configurations from the same
+                    image, allowing for flexibility in deployment.</p>
+            </section>
+
+            <!-- Basic Docker Commands -->
+            <section>
+                <h3>Basic Docker Commands</h3>
                 <pre><code class="hljs bash" data-trim data-line-numbers>
                     docker run hello-world
+                    docker ps
+                    docker build -t laravel-horizon .
+                    docker run -d -p 8000:80 laravel-horizon --name laravel-horizon "php artisan horizon --host 0.0.0.0"
+                    
                 </code></pre>
-                <p class="content">This command runs a simple Docker container that prints a "Hello World" message, verifying that Docker is installed and functioning correctly.</p>
             </section>
 
+            <!-- Dockerfile -->
             <section>
-                <h3>Building and Managing Docker Images</h3>
-                <p class="content">Docker images are the blueprints for containers. They are built using Dockerfiles, which contain a series of instructions to set up the environment and application.</p>
+                <h3>Dockerfile</h3>
+                <p class="content">A Dockerfile is a text file that contains instructions to build a Docker image.
+                    It defines the base image, dependencies, and commands to run.</p>
+                <p class="content">Example Dockerfile:</p>
                 <pre><code class="hljs dockerfile" data-trim data-line-numbers>
-                    FROM python:3.8-slim
+                    FROM improwised/php-base:8.2-s6
+                    RUN mkdir -p /app && chown -R nginx:nginx /app
+
+                    COPY composer.* /app/
+
                     WORKDIR /app
-                    COPY . .
-                    RUN pip install -r requirements.txt
-                    CMD ["python", "app.py"]
+                    RUN php -d memory_limit=1024M /usr/bin/composer install --no-scripts --no-autoloader
+
+                    COPY . /app/
+
+                    RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize
+
+                    WORKDIR /app
                 </code></pre>
-                <p class="content">This Dockerfile sets up a Python environment, installs dependencies, and specifies the command to run the application.</p>
             </section>
 
+            <!-- Docker Compose -->
             <section>
-                <h3>Networking and Data Management in Docker</h3>
-                <p class="content">Docker provides networking capabilities to connect containers and manage data through volumes and bind mounts.</p>
-                <ul class="content">
-                    <li><strong>Networking:</strong> Docker allows containers to communicate with each other and the outside world through networks.</li>
-                    <li><strong>Volumes:</strong> Managed by Docker, volumes persist data independently of the container's lifecycle.</li>
-                    <li><strong>Bind Mounts:</strong> Bind mounts map a file or directory on the host machine into a container.</li>
-                </ul>
+                <h3>Docker Compose</h3>
+                <p class="content">Docker compose is useful for defining and running multi-container Docker applications.
+                    It allows you to define services, networks, and volumes in a single file.</p>
+                <p class="content">You can manage dependencies and configurations for multiple containers
+                    using a <code>docker-compose.yml</code> file.</p>
             </section>
 
+            <!-- Local Development -->
             <section>
-                <h3>Best Practices and Security Considerations</h3>
-                <ul class="content">
-                    <li>Use official and trusted images.</li>
-                    <li>Keep images lightweight by minimizing unnecessary layers.</li>
-                    <li>Regularly scan images for vulnerabilities.</li>
-                    <li>Run containers with the least privileges necessary.</li>
-                    <li>Manage secrets and sensitive data securely.</li>
-                </ul>
+                <h3>Local Development with Docker</h3>
+                <p class="content">Use Docker to create isolated environments for development, testing, and
+                    debugging.</p>
             </section>
 
+            <!-- Networking -->
             <section>
-                <h3>Q&A Session</h3>
+                <h3>Docker Networking</h3>
+                <p class="content">Docker provides networking capabilities to connect containers and manage
+                    communication.</p>
+            </section>
+
+            <!-- Volumes -->
+            <section>
+                <h3>Docker Volumes</h3>
+                <p class="content">Volumes persist data independently of container lifecycle, while bind mounts map
+                    host files into containers.</p>
+            </section>
+
+            <!-- Demo -->
+            <section>
+                <h3>Demo</h3>
+                <p class="content">Explore the Laravel Horizon Demo: <a
+                        href="https://github.com/Improwised/laravel-horizon-demo">GitHub Repository</a>.</p>
+            </section>
+
+            <!-- Summary -->
+            <section>
+                <h3>Summary</h3>
+                <!-- What is benefit of docker to students? -->
+                <!-- How it can help them in their projects? -->
+                <p class="content">You don't need to install anything on your local machine to run the demo.
+                    Just run <code>docker compose up</code> and you are good to go.</p>
+                <p class="content"> That keep your system clean and less resource intensive.</p>
+            </section>
+
+            <!-- Q&A -->
+            <section>
+                <h3>Q&A</h3>
                 <p class="content">Feel free to ask any questions or seek clarifications on the topics covered.</p>
             </section>
 
+            <!-- Feedback -->
             <section>
-                <h3>Thank You!</h3>
-                <p class="content">We hope this workshop has provided you with a solid foundation in Docker and containerization. Happy deploying!</p>
+                <h3>Feedback</h3>
+                <p class="content">We value your feedback to improve future workshops.</p>
+            </section>
+
+            <!-- Quiz -->
+            <section>
+                <h3>Quiz Session</h3>
+                <p class="content">Test your knowledge with a fun quiz!</p>
             </section>
         </div>
     </div>
@@ -131,6 +291,11 @@
     <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
+    <script>
+        hljs.registerLanguage('dockerfile', function (hljs) {
+            return hljs.getLanguage('dockerfile');
+        });
+    </script>
     <script>
         Reveal.initialize({
             hash: true,
