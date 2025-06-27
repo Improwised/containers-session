@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Docker Workshop</title>
+    <title>Containers</title>
     <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css">
     <link rel="stylesheet" href="dist/theme/black.css">
@@ -47,48 +47,62 @@
         <div class="slides">
             <!-- Introduction -->
             <section data-auto-animate>
-                <img id="docker-logo" src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png"
-                    alt="Docker Logo">
-                <h2 class="workshop-title">Docker Workshop</h2>
-                <h5 class="subtitle">Facilitators: Munir Khakhi and Chintan Viradiya</h4>
+                <h2 class="workshop-title">Containers</h2>
+                <h5 class="subtitle">Facilitators: Munir Khakhi & Chintan Viradiya</h5>
             </section>
+
             <section>
                 <section>
                     <h3> Who we are?</h3>
                     <p class="fragment">Improwised Technologies</p>
-                </section>
-                <section>
-                    <p>Munir Khakhi</p>
-                </section>
-                <section>
-                    <h2>Chintan Viradiya</h2>
-                    <p>
-                        I'm Chintan Viradiya, working as a DevOps Engineer at Improwised Technologies.
-                        I focus on IaaC, managing CI/CD pipelines, and optimizing cloud deployments.
-                        Committed to enhancing system performance, and developer productivity.
+                    <p class="fragment">
+                        We are a team of passionate engineers dedicated to building platforms that build the future.
                     </p>
+
+                </section>
+                <section>
+                    <div style="display: flex; align-items: center; margin-top: 20px;">
+                        <img src="./img/munir.jpg" alt="Munir Khakhi"
+                            style="width: 100px; border-radius: 8px; margin-right: 20px;" />
+                        <div style="font-size: 22px; text-align: left;">
+                            <b>Munir Khakhi</b><br>
+                            Head of Engineering at Improwised Technologies<br>
+                            Local community speaker<br>
+                            OSS contributor
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; margin-top: 20px;">
+                        <img src="./img/munir.jpg" alt="Munir Khakhi"
+                            style="width: 100px; border-radius: 8px; margin-right: 20px;" />
+                        <div style="font-size: 22px; text-align: left;">
+                            <b>Chintan Viradiya</b><br>
+                            DevOps Engineer at Improwised Technologies.<br>
+                            I focus on IaaC, managing CI/CD pipelines, and optimizing cloud deployments.<br>
+                            Committed to enhancing system performance, and developer productivity.
+                        </div>
+                    </div>
                 </section>
             </section>
             <!-- Icebreaker -->
             <section>
-                <h4>How many of you have used Docker?</h4>
+                <h4>How many of you have used Podman/Docker?</h4>
             </section>
             <!-- Agenda -->
             <section>
                 <h3>Workshop Agenda</h3>
                 <ul class="content">
-                    <li>Introduction to Docker</li>
-                    <li>Why Docker?</li>
+                    <li>Introduction to Podman</li>
+                    <li>Why Podman?</li>
                     <li>VM vs Container</li>
-                    <li>Docker Architecture</li>
+                    <li>Podman Architecture</li>
                     <li>Installation</li>
                     <li>Images and Containers</li>
-                    <li>Basic Docker Commands</li>
-                    <li>Dockerfile</li>
-                    <li>Docker Compose</li>
-                    <li>Local Development with Docker</li>
-                    <li>Docker Networking</li>
-                    <li>Docker Volumes (Volumes vs Bind Mounts)</li>
+                    <li>Basic Podman Commands</li>
+                    <li>Containerfile</li>
+                    <li>Podman Compose</li>
+                    <li>Local Development with Podman</li>
+                    <li>Podman Networking</li>
+                    <li>Podman Volumes (Volumes vs Bind Mounts)</li>
                     <li>Demo: <a href="https://github.com/Improwised/laravel-horizon-demo">Laravel Horizon Demo</a>
                     </li>
                     <li>Summary</li>
@@ -96,37 +110,10 @@
                     <li>Feedback</li>
                 </ul>
             </section>
-
-            <!-- Docker Introduction -->
-            <section>
-                <h3>Introduction to Docker</h3>
-                <ul class="content">
-                    <li> A cloud infrastructure company (formerly dotCloud) that created Docker as an internal tool</li>
-                    <li> Container Runtime daemon that runs and manages Containers on top of Linux Kernel</li>
-                    <li> CLI client to the Docker Daemon</li>
-                    <li> Container Image Packaging Format, now evolved into OCI Image</li>
-                </ul>
-            </section>
-
-            <!-- Why Docker -->
-            <section>
-                <h3>Why Docker?</h3>
-                <ul class="content">
-                    <li>Quick and consistent local development setup.</li>
-                    <li>Consistency across development and production environments.</li>
-                    <li>Lightweight and faster than traditional virtual machines.</li>
-                    <li>Improved scalability and resource efficiency.</li>
-                </ul>
-                <aside class="notes">
-                    Explain how Docker allows developers to create isolated environments that can be easily shared
-                    and deployed, reducing the "it works on my machine" problem.
-                </aside>
-            </section>
-
             <!-- VM vs Container -->
             <section>
                 <h3>VM vs Container</h3>
-                <img src="./img/containers.png" alt="VMs vs Containers">
+                <img src="./img/containers.png" alt="VMs vs Containers" style="background-color: gray;">
                 <p class="content">Virtual Machines emulate entire operating systems, while containers share the
                     host OS kernel and isolate application processes, making them more lightweight and efficient.
                 </p>
@@ -134,21 +121,52 @@
                     Discuss the differences between VMs and containers, emphasizing how containers are more
                     resource-efficient and faster to start up.
                     Explain what is Kernel and how containers share the host OS kernel.
+                    Kernel is the core part of an operating system that manages hardware and software resources.
+                    Containers run on the host OS kernel, allowing them to be lightweight and fast.
+                    Containers are fast because they share the host OS kernel, eliminating the need for a full OS boot.
+                    Boot is the process of starting up an operating system, which can take time in VMs.
                 </aside>
             </section>
+            <section>
+                <!-- Introduction to Podman -->
+                <section>
+                    <h3>Introduction to Podman</h3>
+                    <ul class="content">
+                        <li>Podman is a daemonless container engine for developing, managing, and running OCI
+                            containers.</li>
+                        <li>It provides a CLI similar to Docker but does not require a central daemon.</li>
+                        <li>Podman supports rootless containers, enhancing security.</li>
+                        <li>Podman can directly replace Docker commands in most cases.</li>
+                    </ul>
+                </section>
 
-            <!-- Docker Architecture -->
+                <!-- Why Podman -->
+                <section>
+                    <h3>Why Podman?</h3>
+                    <ul class="content">
+                        <li>Daemonless architecture for better security and flexibility.</li>
+                        <li>Rootless containers for enhanced security.</li>
+                        <li>Compatible with Docker CLI commands.</li>
+                        <li>Lightweight and efficient container management.</li>
+                    </ul>
+                    <aside class="notes">
+                        Explain how Podman eliminates the need for a central daemon, making it more secure and flexible.
+                        Highlight its compatibility with Docker commands and rootless container support.
+                    </aside>
+                </section>
+            </section>
+            <!-- Podman Architecture -->
             <section>
                 <section>
-                    <h3>Docker Architecture</h3>
+                    <h3>Podman Architecture</h3>
                     <p class="content">Docker uses a client-server architecture. The Docker client talks to the Docker
                         daemon, which does the heavy lifting of building, running, and distributing your Docker
                         containers</p>
                     </p>
                 </section>
                 <section>
-                    <h3>Docker Architecture</h3>
-                    <img src="./img/docker-architecture.webp" alt="Docker Architecture">
+                    <h3>Podman Architecture</h3>
+                    <img src="./img/podman-arch.png" alt="Podman Architecture" style="width: 50%;">
                 </section>
             </section>
 
@@ -156,90 +174,132 @@
             <section>
                 <h3>Installation</h3>
                 <ul class="content">
-                    <li>Windows/Mac: Install Docker Desktop.</li>
-                    <li>Linux: Install Docker using package managers like apt or pacman.</li>
-                    <li>Verify installation with <code>docker --version</code>.</li>
+                    <li>Windows/Mac: Install <a href="https://podman-desktop.io/">Podman Desktop</a>.</li>
+                    <li>Linux: Install Podman using package managers like apt or pacman.</li>
+                    <li>Verify installation with <code>podman --version</code>.</li>
                 </ul>
                 <aside class="notes">
                     Explain the installation process for different operating systems, highlighting the ease of use
-                    with Docker Desktop for Windows and Mac.
-                    Mention that Linux users can install Docker using their package manager.
+                    with Podman Desktop for Windows and Mac.
+                    Mention that Linux users can install Podman using their package manager.
                 </aside>
             </section>
 
             <!-- Images and Containers -->
             <section>
                 <h3>Images and Containers</h3>
-                <p class="content">Docker images are blueprints for containers, while containers are runtime
+                <p class="content">Podman images are blueprints for containers, while containers are runtime
                     instances of images.</p>
-                 <!-- Build time and runtime -->
-                <p class="content">Images are built using Dockerfiles, which define the environment and
+                <!-- Build time and runtime -->
+                <p class="content">Images are built using Containerfile, which define the environment and
                     dependencies for the application. Containers are created from these images and run the
                     application.</p>
                 <p class="content">Images are immutable, meaning they do not change once created, while containers can
                     be
                     started, stopped, and modified.</p>
                 <p class="content">Images are stored in a registry, such as Docker Hub, and can be pulled to create
-                    containers on any host with Docker installed.</p>
+                    containers on any host with Podman installed.</p>
                 <p class="content">You can build multiple containers with different configurations from the same
                     image, allowing for flexibility in deployment.</p>
             </section>
 
-            <!-- Basic Docker Commands -->
+            <!-- Basic Podman Commands -->
             <section>
-                <h3>Basic Docker Commands</h3>
+                <h3>Basic Podman Commands</h3>
                 <pre><code class="hljs bash" data-trim data-line-numbers>
-                    docker run hello-world
-                    docker ps
-                    docker build -t laravel-horizon .
-                    docker run -d -p 8000:80 laravel-horizon --name laravel-horizon "php artisan horizon --host 0.0.0.0"
-                    
-                </code></pre>
+        podman run hello-world
+        podman ps
+        podman build -t laravel-horizon .
+        podman run -dt -p 8080:80/tcp docker.io/library/httpd
+    </code></pre>
             </section>
 
-            <!-- Dockerfile -->
+            <!-- Containerfile -->
             <section>
-                <h3>Dockerfile</h3>
-                <p class="content">A Dockerfile is a text file that contains instructions to build a Docker image.
-                    It defines the base image, dependencies, and commands to run.</p>
-                <p class="content">Example Dockerfile:</p>
-                <pre><code class="hljs dockerfile" data-trim data-line-numbers>
-                    FROM improwised/php-base:8.2-s6
-                    RUN mkdir -p /app && chown -R nginx:nginx /app
-
-                    COPY composer.* /app/
-
-                    WORKDIR /app
-                    RUN php -d memory_limit=1024M /usr/bin/composer install --no-scripts --no-autoloader
-
-                    COPY . /app/
-
-                    RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize
-
-                    WORKDIR /app
-                </code></pre>
+                <section>
+                    <h3>Containerfile</h3>
+                    <p class="content">A Containerfile is similar to a Dockerfile and contains instructions to build a
+                        container image.</p>
+                    <p class="content">Example Containerfile:</p>
+                    <pre><code class="hljs dockerfile" data-trim data-line-numbers>
+            FROM improwised/php-base:8.2-s6
+            RUN mkdir -p /app && chown -R nginx:nginx /app
+    
+            COPY composer.* /app/
+    
+            WORKDIR /app
+            RUN php -d memory_limit=1024M /usr/bin/composer install --no-scripts --no-autoloader
+    
+            COPY . /app/
+    
+            RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize
+    
+            WORKDIR /app
+        </code></pre>
+                </section>
+                <section>
+                    <p class="content">To Run container:</p>
+                    <pre><code class="hljs dockerfile" data-trim data-line-numbers>
+                        podman run -it --rm -p 9000:9000 --name laravel-horizon --env-file .env laravel-horizon /bin/sh -c "set -e && php artisan serve --host 0.0.0.0 --port 9000"
+                    </code></pre>
+                </section>
             </section>
-
-            <!-- Docker Compose -->
+            <!-- podman run -it --rm -p 9000:9000 --name laravel-horizon --env-file .env laravel-horizon /bin/sh -c "set -e && php artisan serve --host 0.0.0.0 --port 9000" -->
+            <!-- Podman Compose -->
             <section>
-                <h3>Docker Compose</h3>
-                <p class="content">Docker compose is useful for defining and running multi-container Docker applications.
-                    It allows you to define services, networks, and volumes in a single file.</p>
-                <p class="content">You can manage dependencies and configurations for multiple containers
-                    using a <code>docker-compose.yml</code> file.</p>
+                <section>
+                    <h3>Podman Compose</h3>
+                    <p class="content">Podman Compose is useful for defining and running multi-container Podman
+                        applications.</p>
+                    <p class="content">It allows you to define services, networks, and volumes in a single file, similar to
+                        Docker Compose.</p>
+                </section>
+                <section>
+                    <h3>Podman Compose</h3>
+                    <pre><code class="hljs dockerfile" data-trim data-line-numbers>
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=quotes
+      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: mauFJcuf5dhRMQrjj
+
+volumes:
+  db:
+    driver: local
+                    </code></pre>
+                </section>
             </section>
 
             <!-- Local Development -->
             <section>
-                <h3>Local Development with Docker</h3>
-                <p class="content">Use Docker to create isolated environments for development, testing, and
+                <h3>Local Development with Podman</h3>
+                <p class="content">Use Podman to create isolated environments for development, testing, and
                     debugging.</p>
             </section>
 
             <!-- Networking -->
             <section>
-                <h3>Docker Networking</h3>
-                <p class="content">Docker provides networking capabilities to connect containers and manage
+                <h3>Podman Networking</h3>
+                <p class="content">Podman provides networking capabilities to connect containers and manage
                     communication.</p>
             </section>
 
@@ -260,11 +320,9 @@
             <!-- Summary -->
             <section>
                 <h3>Summary</h3>
-                <!-- What is benefit of docker to students? -->
-                <!-- How it can help them in their projects? -->
                 <p class="content">You don't need to install anything on your local machine to run the demo.
-                    Just run <code>docker compose up</code> and you are good to go.</p>
-                <p class="content"> That keep your system clean and less resource intensive.</p>
+                    Just run <code>podman-compose up</code> and you are good to go.</p>
+                <p class="content">This keeps your system clean and less resource-intensive.</p>
             </section>
 
             <!-- Q&A -->
