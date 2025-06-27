@@ -89,7 +89,7 @@
             </section>
             <!-- Agenda -->
             <section>
-                <h3>Workshop Agenda</h3>
+                <h3>Agenda</h3>
                 <ul class="content">
                     <li>Introduction to Podman</li>
                     <li>Why Podman?</li>
@@ -209,7 +209,6 @@
                 <pre><code class="hljs bash" data-trim data-line-numbers>
         podman run hello-world
         podman ps
-        podman build -t laravel-horizon .
         podman run -dt -p 8080:80/tcp docker.io/library/httpd
     </code></pre>
             </section>
@@ -230,16 +229,15 @@
             WORKDIR /app
             RUN php -d memory_limit=1024M /usr/bin/composer install --no-scripts --no-autoloader
     
-            COPY . /app/
+            COPY . .
     
-            RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize
-    
-            WORKDIR /app
+            RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize    
         </code></pre>
                 </section>
                 <section>
                     <p class="content">To Run container:</p>
                     <pre><code class="hljs dockerfile" data-trim data-line-numbers>
+                        podman build -t laravel-horizon .
                         podman run -it --rm -p 9000:9000 --name laravel-horizon --env-file .env laravel-horizon /bin/sh -c "set -e && php artisan serve --host 0.0.0.0 --port 9000"
                     </code></pre>
                 </section>
@@ -351,6 +349,7 @@ volumes:
     <script src="plugin/highlight/highlight.js"></script>
     <script>
         hljs.registerLanguage('dockerfile', function (hljs) {
+            hljs.highlightAll();
             return hljs.getLanguage('dockerfile');
         });
     </script>
