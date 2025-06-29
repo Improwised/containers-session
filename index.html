@@ -106,6 +106,13 @@
             <!-- Icebreaker -->
             <section>
                 <h4>How many of you have used Podman/Docker?</h4>
+                <aside class="notes">
+                    Operates without a daemon
+                    Fully compatibility with Docker CLI
+                    Rootless containers
+                    Can run as a non-root user
+                    Can run on any Linux distribution
+                </aside>
             </section>
             <!-- Agenda -->
             <section>
@@ -132,6 +139,7 @@
             </section>
             <!-- Introduction to Podman -->
             <section>
+                <img src="https://podman.io/logos/optimized/podman-3-logo-266w-253h.webp" alt="Podman Logo" style="height: 80px;" />
                 <h3>Introduction to Podman</h3>
                 <ul class="content">
                     <li>Podman is a daemonless container engine for developing, managing, and running OCI
@@ -164,6 +172,8 @@
                     host OS kernel and isolate application processes, making them more lightweight and efficient.
                 </p>
                 <aside class="notes">
+                    Image Layers are like a stack of layers, where each layer represents a change or addition to the
+                    image.
                     Discuss the differences between VMs and containers, emphasizing how containers are more
                     resource-efficient and faster to start up.
                     Explain what is Kernel and how containers share the host OS kernel.
@@ -346,23 +356,55 @@ volumes:
                     and portable environment across all team members.
                 </p>
                 <aside class="notes">
-                    <p>Ex. E-Commerce Application.</p>
+                    Ex. E-Commerce Application.
+                    Isolating applications and dependencies
                 </aside>
             </section>
 
             <!-- Networking -->
+            <!-- Podman Networking -->
             <section>
                 <h3>Podman Networking</h3>
-                <p class="content">Podman provides networking capabilities to connect containers and manage
-                    communication.</p>
+
+                <ul class="fragment content">
+                    <li>Supports <strong>bridge</strong>, <strong>macvlan</strong>, <strong>slirp4netns</strong>
+                        (rootless), and more.</li>
+                    <li>Uses <strong>Netavark</strong> (default for rootful)
+                </ul>
+
+                <p class="fragment content">
+                    Podman supports creating custom networks with <code>podman network create</code>, similar to Docker.
+                </p>
+
+                <aside class="notes">
+                    Podman’s newer versions use Netavark as the backend network stack, replacing CNI in many setups.
+                    Rootless mode is very powerful for non-privileged users, using slirp4netns.
+                    Aardvark handles DNS for containers in a more modular and secure way.
+                </aside>
             </section>
+
 
             <!-- Volumes -->
             <section>
-                <h3>Docker Volumes</h3>
-                <p class="content">Volumes persist data independently of container lifecycle, while bind mounts map
-                    host files into containers.</p>
+                <h3>Podman: Volumes vs Bind Mounts</h3>
+                <ul class="fragment content">
+                    <li><strong>Volumes</strong>: Managed by Podman. Stored in
+                        <code>~/.local/share/containers/storage</code>.
+                    </li>
+                    <li><strong>Bind Mounts</strong>: Directly map host files or directories into the container.</li>
+                </ul>
+
+                <p class="fragment content">
+                    <strong>Key Difference:</strong> Volumes are more portable and safer; Bind Mounts provide direct
+                    access to host paths.
+                </p>
+
+                <p class="fragment content">
+                    <strong>Use Volumes</strong> when you want data decoupled from the host filesystem.<br>
+                    <strong>Use Bind Mounts</strong> when you need to share existing files between host and container.
+                </p>
             </section>
+
 
             <!-- Demo -->
             <section>
