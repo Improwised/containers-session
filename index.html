@@ -110,6 +110,32 @@
                     <li>Feedback</li>
                 </ul>
             </section>
+            <!-- Introduction to Podman -->
+            <section>
+                <h3>Introduction to Podman</h3>
+                <ul class="content">
+                    <li>Podman is a daemonless container engine for developing, managing, and running OCI
+                        containers.</li>
+                    <li>It provides a CLI similar to Docker but does not require a central daemon.</li>
+                    <li>Podman supports rootless containers, enhancing security.</li>
+                    <li>Podman can directly replace Docker commands in most cases.</li>
+                </ul>
+            </section>
+
+            <!-- Why Podman -->
+            <section>
+                <h3>Why Podman?</h3>
+                <ul class="content">
+                    <li>Daemonless architecture for better security and flexibility.</li>
+                    <li>Rootless containers for enhanced security.</li>
+                    <li>Compatible with Docker CLI commands.</li>
+                    <li>Lightweight and efficient container management.</li>
+                </ul>
+                <aside class="notes">
+                    Explain how Podman eliminates the need for a central daemon, making it more secure and flexible.
+                    Highlight its compatibility with Docker commands and rootless container support.
+                </aside>
+            </section>
             <!-- VM vs Container -->
             <section>
                 <h3>VM vs Container</h3>
@@ -126,34 +152,6 @@
                     Containers are fast because they share the host OS kernel, eliminating the need for a full OS boot.
                     Boot is the process of starting up an operating system, which can take time in VMs.
                 </aside>
-            </section>
-            <section>
-                <!-- Introduction to Podman -->
-                <section>
-                    <h3>Introduction to Podman</h3>
-                    <ul class="content">
-                        <li>Podman is a daemonless container engine for developing, managing, and running OCI
-                            containers.</li>
-                        <li>It provides a CLI similar to Docker but does not require a central daemon.</li>
-                        <li>Podman supports rootless containers, enhancing security.</li>
-                        <li>Podman can directly replace Docker commands in most cases.</li>
-                    </ul>
-                </section>
-
-                <!-- Why Podman -->
-                <section>
-                    <h3>Why Podman?</h3>
-                    <ul class="content">
-                        <li>Daemonless architecture for better security and flexibility.</li>
-                        <li>Rootless containers for enhanced security.</li>
-                        <li>Compatible with Docker CLI commands.</li>
-                        <li>Lightweight and efficient container management.</li>
-                    </ul>
-                    <aside class="notes">
-                        Explain how Podman eliminates the need for a central daemon, making it more secure and flexible.
-                        Highlight its compatibility with Docker commands and rootless container support.
-                    </aside>
-                </section>
             </section>
             <!-- Podman Architecture -->
             <section>
@@ -177,11 +175,13 @@
                     <li>Windows/Mac: Install <a href="https://podman-desktop.io/">Podman Desktop</a>.</li>
                     <li>Linux: Install Podman using package managers like apt or pacman.</li>
                     <li>Verify installation with <code>podman --version</code>.</li>
+                    <li> Check the Podman service status.</li>
                 </ul>
                 <aside class="notes">
-                    Explain the installation process for different operating systems, highlighting the ease of use
-                    with Podman Desktop for Windows and Mac.
-                    Mention that Linux users can install Podman using their package manager.
+                    Ubuntu --> apt <br>
+                    Fedora --> dnf <br>
+                    Arch Linux --> pacman <br>
+                    CentOS/RHEL --> yum <br>
                 </aside>
             </section>
 
@@ -201,6 +201,12 @@
                     containers on any host with Podman installed.</p>
                 <p class="content">You can build multiple containers with different configurations from the same
                     image, allowing for flexibility in deployment.</p>
+                <aside class="notes">
+                    <p class="content">immutability ensures reproducibility</p>
+                    <p class="content"> are portable and shareable.</p>
+                    <p class="content">One image → Many containers.</p>
+                    <p class="content">Run multiple version simultaneously.</p>
+                </aside>
             </section>
 
             <!-- Basic Podman Commands -->
@@ -233,6 +239,13 @@
     
             RUN php -d memory_limit=1024M /usr/bin/composer dump-autoload --optimize    
         </code></pre>
+                    <aside class="notes">
+                        RUN vs CMD vs ENTRYPOINT <br>
+                        COPY vs ADD <br>
+                        ENV vs ARG <br>
+                        LABEL <br>
+                        USER <br>
+                    </aside>
                 </section>
                 <section>
                     <p class="content">To Run container:</p>
@@ -252,6 +265,9 @@
                     <p class="content">It allows you to define services, networks, and volumes in a single file, similar
                         to
                         Docker Compose.</p>
+                    <aside class="notes">
+                        <p class="content">Handles service dependencies</p>
+                    </aside>
                 </section>
                 <section>
                     <h3>Podman Compose</h3>
@@ -285,6 +301,10 @@ volumes:
   db:
     driver: local
                     </code></pre>
+                    <aside class="notes">
+                        <p>allows the container to change process priorities using nice, renice, or setpriority() system
+                            calls.</p>
+                    </aside>
                 </section>
             </section>
 
@@ -293,6 +313,14 @@ volumes:
                 <h3>Local Development with Podman</h3>
                 <p class="content">Use Podman to create isolated environments for development, testing, and
                     debugging.</p>
+                <p class="content">You can define your full development stack using a Containerfile and
+                    container-compose.yml,
+                    and start everything with a single <code>podman-compose up </code> command — ensuring a consistent
+                    and portable environment across all team members.
+                </p>
+                <aside class="notes">
+                    <p>Ex. E-Commerce Application.</p>
+                </aside>
             </section>
 
             <!-- Networking -->
