@@ -175,7 +175,7 @@
             </section>
             <!-- Podman Architecture -->
             <section>
-                <section>
+                <section data-timing="500">
                     <h3>Podman Architecture</h3>
                     <p class="content">Docker uses a client-server architecture. The Docker client talks to the Docker
                         daemon, which does the heavy lifting of building, running, and distributing your Docker
@@ -185,6 +185,13 @@
                 <section>
                     <h3>Podman Architecture</h3>
                     <img src="./img/podman-arch.png" alt="Podman Architecture" style="width: 50%;">
+                    <aside class="notes">
+                        <!-- runc, buildah, skopeo -->
+                        Runc is the container runtime that Podman uses to create and manage containers.
+                        Buildah is used to build container images.
+                        Skopeo works with API V2 container image registries such as docker.io and quay.io registries,
+                        private registries, local directories and local OCI-layout directories
+                    </aside>
                 </section>
             </section>
 
@@ -195,7 +202,7 @@
                     <li>Windows/Mac: Install <a href="https://podman-desktop.io/">Podman Desktop</a>.</li>
                     <li>Linux: Install Podman using package managers like apt or pacman.</li>
                     <li>Verify installation with <code>podman --version</code>.</li>
-                    <li> Check the Podman service status.</li>
+                    <li>Check the Podman service status.</li>
                 </ul>
                 <aside class="notes">
                     Ubuntu --> apt <br>
@@ -408,7 +415,8 @@ volumes:
     <script>
         Reveal.initialize({
             hash: true,
-            plugins: [RevealMarkdown, RevealHighlight, RevealNotes]
+            plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+            defaultTiming: 300
         });
     </script>
 </body>
